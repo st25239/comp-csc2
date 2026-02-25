@@ -28,3 +28,7 @@ overflow: hidden;
 .navbar li{
     float: left;
 }
+@media  screen and (max-width:600px)   {
+    
+    
+}
