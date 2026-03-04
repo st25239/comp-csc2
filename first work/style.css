@@ -1,4 +1,5 @@
-*, *::after, *::before{
+*, *::after, 
+*::before{
     box-sizing: border-box;
 }
 :root {
@@ -9,6 +10,7 @@
 body{
     margin: 0px;
 }
+
 main{
     margin-left: 20px;
      margin-right: 20px;
@@ -40,14 +42,14 @@ nav {
     display: flex;
 }
 
-
-
 .carousel {
     overflow-x: auto;
     display: flex;
     margin: 100px auto;
     width: 90%;
-    border: 5px solid red
+    border: 5px solid red;
+    position: relative;
+    top: 10px;
 }
 .carousel::-webkit-scrollbar{
     display: none;
@@ -57,7 +59,7 @@ nav {
     align-items: center;
     justify-content: center;
     gap: 1em;
-    animation: spin 5s infinite linear;
+    animation: spin 7s infinite linear;
     padding-right: 1em;
 }
 .card{
