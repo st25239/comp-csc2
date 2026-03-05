@@ -2,14 +2,27 @@
 *::before{
     box-sizing: border-box;
 }
-:root {
-    --bar-width: 60px
-    --bar-height: 8px
-    --hamburger-gap: 6px
-}
+
 body{
     margin: 0px;
 }
+:root {
+     --bar-width: 60px
+     --bar-height: 8px
+     
+     --hamburger-gap: 6px
+     --foreground: #333; 
+    background-color: white;
+}
+.hamburger-menu::before,
+.hamburger-menu::after,
+.hamburger-menu input {
+    content: "";
+    width: var(--bar-width);
+    height: var(--bar-height);
+    background-color:(var(--foreground));
+}
+
 
 main{
     margin-left: 20px;
