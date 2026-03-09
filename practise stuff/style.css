@@ -1,13 +1,26 @@
-body{
-    margin: 0px;
+/* this is my hamburger bar */
+*, 
+*::after, 
+*::before{
+    box-sizing: border-box;
 }
-
+body{
+    margin: 0;
+}
 :root {
      --bar-width: 60px;
      --bar-height: 8px;
      --hamburger-gap: 6px;
      --foreground: #333; 
     background-color: white;
+}
+.hamburger-menu{
+    display: flex;
+    flex-direction: column; 
+    gap: var(--hamburger-gap);
+    background: red;
+    width: max-content;
+    
 }
 .hamburger-menu::before,
 .hamburger-menu::after,
@@ -16,8 +29,15 @@ body{
     width: var(--bar-width);
     height: var(--bar-height);
     background-color:(var(--foreground));
+    border-radius: 9999px;
 }
-
-.hamburger-menu{
-    display: flex;
+.hamburger-menu input{
+    appearance: none;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    pointer-events: none;
 }
+/*.hamburger-menu input:checked::before{
+    background: red;
+} */
