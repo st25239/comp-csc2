@@ -1,42 +1,25 @@
-/* this is my hamburger bar */
-*, 
-*::after, 
-*::before{
-    box-sizing: border-box;
-}
-body{
-    margin: 0;
-}
-:root {
-     --bar-width: 60px;
-     --bar-height: 8px;
-     --hamburger-gap: 6px;
-     --foreground: #333; 
-    background-color: white;
-}
-.hamburger-menu{
+style.css/* off screen menu */
+
+.off-screen-menu{
+    background-color: rgb(34,37,49);
+    height: 100vh;
+    width: 100%;
+    max-width: 450px;
+    position: fixed;
+    top: 0;
+    right: -450px;
     display: flex;
-    flex-direction: column; 
-    gap: var(--hamburger-gap);
-    width: max-content;
-    background: red
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 3rem;
+    transition: right 0.3s ease;
 }
-.hamburger-menu::before,
-.hamburger-menu::after,
-.hamburger-menu input {
-    content: "";
-    width: var(--bar-width);
-    height: var(--bar-height);
-    background-color:(var(--foreground));
-    border-radius: 9999px;
+.off-screen-menu.active{
+    right: 0;
 }
-.hamburger-menu input{
-    appearance: none;
-    padding: 0;
-    margin: 0;
-    outline: none;
-    pointer-events: none;
+nav{
+    display: flex;
+    padding: 1rem;
 }
-/*.hamburger-menu input:checked::before{
-    background: red;
-} */
