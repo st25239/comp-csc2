@@ -1,26 +1,4 @@
-*, *::after, 
-*::before{
-    box-sizing: border-box;
-}
 
-body{
-    margin: 0px;
-}
-:root {
-     --bar-width: 60px
-         --bar-height: 8px
-     --hamburger-gap: 6px
-     --foreground: #333; 
-    background-color: white;
-}
-.hamburger-menu::before,
-.hamburger-menu::after,
-.hamburger-menu input {
-    content: "";
-    width: var(--bar-width);
-    height: var(--bar-height);
-    background-color:(var(--foreground));
-}
 
 
 main{
@@ -53,7 +31,7 @@ overflow: hidden;
 nav {
     display: flex;
 }
-
+/* this is my carousel*/
 .carousel {
     overflow-x: auto;
     display: flex;
