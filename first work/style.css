@@ -1,35 +1,35 @@
 
-
-
-main{
-    margin-left: 20px;
-     margin-right: 20px;
+.navbar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
 }
-h1{
-    text-align: center;
-}
+
 .navbar ul{
-list-style-type: none;
-background-color: peru;
-padding: 0px;
-margin: 0px;
-overflow: hidden;
+    list-style-type: none;
+    background-color: peru;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    width: 100%;
+    display: flex;   /* makes items line up across */
 }
+
+.navbar li{
+    flex: 1;         /* each item spreads evenly */
+}
+
 .navbar a{
     color: white;
     text-decoration: none;
     padding: 15px;
-    display:block;
+    display: block;
     text-align: center;
 }
+
 .navbar a:hover{
     background-color: rgb(225, 154, 84);
-}
-.navbar li{
-    float: left;
-}
-nav {
-    display: flex;
 }
 /* this is my carousel*/
 .carousel {
@@ -40,6 +40,7 @@ nav {
     border: 5px solid red;
     position: relative;
     top: 10px;
+    top: 1000px;
 }
 .carousel::-webkit-scrollbar{
     display: none;
@@ -65,7 +66,4 @@ nav {
 @keyframes spin{
     from {translate: 0;}
     to {translate:  -100%}
-}
-.carousel-move-down {
-  margin-top: 100px;
 }
