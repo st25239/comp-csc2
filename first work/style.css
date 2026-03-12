@@ -1,4 +1,8 @@
 
+body{
+    background-color: #F9FAFB;
+}
+
 .navbar{
     position: fixed;
     top: 0;
@@ -8,7 +12,7 @@
 
 .navbar ul{
     list-style-type: none;
-    background-color: peru;
+     background-color: #1F2933;
     padding: 0;
     margin: 0;
     overflow: hidden;
@@ -26,10 +30,17 @@
     padding: 15px;
     display: block;
     text-align: center;
+    
 }
-
+.navbar h2{
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+    display: block;
+    text-align: center;
+}
 .navbar a:hover{
-    background-color: rgb(225, 154, 84);
+    background-color: #3E4C59;
 }
 /* this is my carousel*/
 .carousel {
@@ -57,7 +68,7 @@
     flex: 0 0 5em;
     height: 5em;
     width: 1em;
-    background: cornflowerblue;
+    background-color: #3B82F6;
     font-size: 3rem;
     border-radius: .2em;
     text-align: center;
