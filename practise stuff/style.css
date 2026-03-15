@@ -30,3 +30,29 @@
 .navbar a:hover{
     background-color: rgb(225, 154, 84);
 }
+/* this is the container for the flipping card */
+.container{
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #e3dbf6), #a99bf9;
+    padding: 10px;
+}   
+.card{
+    width: 350px;
+    height: 515px;
+    margin: 100px auto 0;
+    background: #fff;
+}
+.card-inner{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.front, .back{
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+}
+.front{
+    background url();
+}
