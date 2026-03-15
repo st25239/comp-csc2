@@ -54,7 +54,7 @@
     border-radius: 15px;
 }
 .front{
-    background: url(image/mewing.jpg);
     background-size: cover;
     background-position: center;
+    background: url(mewing.jpeg);
 }
