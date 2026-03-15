@@ -1,3 +1,55 @@
+*{
+box-sizing:     border-box;
+margin: 0;
+padding: 0;
+font-family: poppins, sans-serif;
+box-sizing: border-box;
+}
+/* this is the css file for my website */
+/* this is teh article for me website */
+aside{
+    width: 20%;
+    float: left;
+    padding: 10px;
+}
+section{
+    width: 40%;
+    float: left;
+    padding: 10px;
+}
+article{
+    width: 40%;
+    float: left;
+    padding: 10px;
+}
+@media screen and (max-width: 600px){
+    aside, section, article{
+        width: 100%;
+        float: none;
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 body{
     background-color: #F9FAFB;
