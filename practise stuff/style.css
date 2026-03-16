@@ -52,9 +52,58 @@
     width: 100%;
     height: 100%;
     border-radius: 15px;
+    position: absolute;
+    backface-visibility: hidden;
 }
 .front{
-    background-size: cover;
-    background-position: center;
     background: url(mewing.jpeg);
+    background-size: cover;
+    background-position: center;    
+    padding: 60px, 20px;
+    display: flex; 
+    flex-direction: column;
+    justify-content: flex-end;
+    color: #fff;
 }
+.front h2{
+    font-weight: 500;
+}
+.front p{
+    color: #ccc;
+    font-size: 13px;
+}
+.front button{
+    width: 120px;
+    border: 1px solid #fff;
+    padding: 10px;
+    background: transparent;
+    border-radius: 50px;
+    padding: 8px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    color: #fff;
+}
+/* this is for the span in the back of the card */
+.back{
+    background-color:  #fff;
+    color: #333;
+    padding: 20px, 40px;
+    transform: translateY(180deg);
+   
+}
+.back h1{
+    font-size: 50px;
+    line-height: 55px;
+    margin-bottom: 10px;
+}
+.back h1 span{
+    font-weight: 400;
+}
+.back p{
+    font-size: 14px;
+}
+/* this is to adgust the font weight and color of the span in the span */
+.back p span{
+    font-weight: 600;
+    
+} 
