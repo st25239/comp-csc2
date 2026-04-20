@@ -14,7 +14,7 @@ body{
 
 .navbar ul{
     list-style-type: none;
-     background-color: #1F2933;
+     background-color: #bc4749;
     padding: 0;
     margin: 0;
     overflow: hidden;
@@ -32,7 +32,7 @@ body{
     padding: 15px;
     display: block;
     text-align: center;
-    
+    font-size: 25px;
 }
 .navbar h2{
     color: white;
@@ -43,4 +43,28 @@ body{
 }
 .navbar a:hover{
     background-color: #3E4C59;
+}
+aside{
+    width: 20%;
+    float: left;
+    padding: 10px;
+}
+section{
+    float: left;   
+    padding: 10px;
+}
+article{
+    width: 40%;
+    float: left;
+    padding: 10px;
+}
+@media screen and (max-width: 600px){
+    aside, section, article{
+        width: 100%;
+        float: none;
+    }
+    
+}
+main{
+    background-color: #f2e8cf;
 }
