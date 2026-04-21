@@ -1,8 +1,5 @@
-
-
-
 body{
-    background-color: #F9FAFB;
+ background-color: #f2e8cf;
 }
 
 .navbar{
@@ -14,7 +11,7 @@ body{
 
 .navbar ul{
     list-style-type: none;
-     background-color: #bc4749;
+     background-color: #dc5f61;
     padding: 0;
     margin: 0;
     overflow: hidden;
@@ -42,12 +39,13 @@ body{
     text-align: center;
 }
 .navbar a:hover{
-    background-color: #3E4C59;
+    background-color: #bd3134;
 }
 aside{
     width: 20%;
     float: left;
     padding: 10px;
+    transform: translateY(px);
 }
 section{
     float: left;   
@@ -65,6 +63,4 @@ article{
     }
     
 }
-main{
-    background-color: #f2e8cf;
-}
+
