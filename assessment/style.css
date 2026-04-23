@@ -1,5 +1,6 @@
 body{
  background-color: #f2e8cf;
+ margin-top: 130px;
 }
 
 .navbar{
@@ -55,15 +56,72 @@ article{
     float: left;
     padding: 10px;
 }
-.navbar img{
-    width: 60%;
-    height: 10%;
+
+
+.carousel {
+    overflow-x: auto;
+    display: flex;
+    margin: 100px auto;
+    width: 90%;
+    padding: 0;
+    transform: translateY(20px);
+}
+.carousel::-webkit-scrollbar{
+    display: none;
+}
+.group{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    animation: spin 5s infinite linear;
+    padding-right: 1em;
+}
+.card{
+    flex: 0 0 5em;
+    height: 5em;
+    width: 1em;
+    background: cornflowerblue;
+    font-size: 3rem;
+    border-radius: .2em;
+    text-align: center;
+    align-content: center;
+}
+.logo {
+        width: 50%;
+        height: auto;
+    }
+.grid-container {
+  display: grid; /* Enables grid layout */
+  
+  /* Define 3 columns: 200px, 1fr (fraction of space), and 20% */
+  grid-template-columns: 200px 1fr 20%; 
+  
+  /* Define 2 rows: 100px and auto (fits content) */
+  grid-template-rows: 100px auto; 
+  
+  /* Add space between items */
+  gap: 10px; 
+}
+
+/* Optional styling for items */
+.grid-item {
+  background-color: white;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+}
+@keyframes spin{
+    from {translate: 0;}
+    to {translate:  -100%}
+}
+@media screen and (max-width: 1200px){
+
+    
 }
 @media screen and (max-width: 600px){
     aside, section, article{
         width: 100%;
         float: none;
     }
-    
 }
-
