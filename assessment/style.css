@@ -91,6 +91,7 @@ article{
         width: 50%;
         height: auto;
     }
+/* Grid container styling */   
 .grid-container {
   display: grid; /* Enables grid layout */
   
@@ -98,7 +99,7 @@ article{
   grid-template-columns: 200px 1fr 20%; 
   
   /* Define 2 rows: 100px and auto (fits content) */
-  grid-template-rows: 100px auto; 
+  grid-template-rows: 100px 10; 
   
   /* Add space between items */
   gap: 10px; 
