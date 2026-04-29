@@ -12,7 +12,6 @@ body{
     z-index: 1000;
 
 }
-
 .navbar ul{
     list-style-type: none;
      background-color: #dc5f61;
@@ -25,7 +24,6 @@ body{
 .navbar li{
     flex: 1;         /* each item spreads evenly */
 }
-
 .navbar a{
     color: white;
     text-decoration: none;
@@ -59,8 +57,44 @@ article{
     float: left;
     padding: 10px;
 }
-
-
+header{
+    display: grid;
+    place-items: center;
+    width: 90%;
+    height: auto;
+    background-color:   #fff5e4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 20px;
+    left: 50%;
+    transform: translateX(2.7%);
+}
+section{
+    margin-top: 30px;
+    display: grid;
+    place-items: center;
+    width: 90%;
+    height: auto;
+    background-color:   #fff5e4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 20px;
+    left: 50%;
+    transform: translateX(2.7%);
+}
+.globe{
+    margin-top: 20px;
+    width: 30%;
+    height: auto;
+    border-radius: 20px;
+    transform: translate(100%);
+}
 .carousel {
     overflow-x: auto;
     display: flex;
