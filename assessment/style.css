@@ -199,6 +199,25 @@ section{
     width : auto;
     text-decoration: none;
 }
+.gallery {
+    display: inline-block;
+    border : 1px solid #747474;
+    margin: 5px;
+    width: 225px;
+}
+.gallery.discription {
+    text-align: center;
+    padding: 10px;
+    font-size: 18px;
+}
+.gallery:hover {
+    border: 1px solid #2f2e2e;
+}
+.gallery img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
 @keyframes spin{
     from {translate: 0;}
     to {translate:  -100%}
