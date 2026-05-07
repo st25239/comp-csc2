@@ -8,6 +8,19 @@
 </head>
 <body>
     <h1>Welcome to the Flask App</h1>
-    <p>This is a simple Flask application.</p>  
+    <p>This is a simple Flask application.</p> 
+    {% if cart %}
+        <ul>
+            {% for item, details in cart.items() %}
+            <li>    
+                {{ item }}: {{ '%.2f' % details['quantity'] }} x ${{ '%.2f' % details['price'] }} = 
+                ${{  details['quantity'] * details['price'] | round(2) }} 
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+
 </body>
 </html>
