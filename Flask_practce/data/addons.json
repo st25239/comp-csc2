@@ -1,0 +1,5 @@
+{
+"Wrapping": {"price": 5, "stock":70},
+"Card": {"price": 4, "stock":60},
+"writing_on_the_card": {"price": 5, "stock":100000000000000000000000000000000000000000000000000000}, 
+}
