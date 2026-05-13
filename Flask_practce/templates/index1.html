@@ -1,0 +1,36 @@
+<html>
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>  
+    <form action="{{ url_for('add_to_cart') }}" method="post">
+    <fieldset>
+        <legend for="flower">Select Flowers</legend>
+
+        <select name="flower" id="flower">
+            {% for flower, details in flowers.items() %}
+                <option value="{{ flower }}">
+                    {{ flower }} - ${{ details['price'] }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label for="quantity">Quantity</label>
+        <input type="number" name="quantity" value="1" min="1">
+
+        <button type="submit">Add to cart</button>
+    </fieldset>
+</form>
+</body>
+
+
+
+
+
+
+
+
+</html>
