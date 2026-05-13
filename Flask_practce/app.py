@@ -9,6 +9,9 @@ def index():
     return render_template('flowers.json')   
     return render_template('addons.json')    
 
+@app.route('/Add to cart', methods=['POST'])
+def add_to_cart():
+    return render_template("index1.html")
 
 
 
@@ -23,7 +26,7 @@ def load_data():
         return flowers
     with open('data/addons.json') as file:
         addons = json.load(file)
-    return ('flowers':  flowers, 'addons'; addons)
+    return {'flowers': flowers, 'addons': addons}
 
 if __name__ == '__main__':
     app.run(debug=True)
