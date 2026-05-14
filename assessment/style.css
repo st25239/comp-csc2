@@ -136,7 +136,7 @@ section{
   grid-template-columns: 200px 1fr 20%; 
   
   /* Define 2 rows: 100px and auto (fits content) */
-  grid-template-rows: 100px 0; 
+  grid-template-rows: 160px 0; 
   
   /* Add space between items */
   gap: 10px; 
