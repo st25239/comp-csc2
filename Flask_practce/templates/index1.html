@@ -10,7 +10,6 @@
     <button type="submit">add to cart</button>
     <fieldset>
         <legend for="flower">Select Flowers</legend>
-
         <select name="flower" id="flower">
             {% for flower, details in flowers.items() %}
                 <option value="{{ flower }}">
@@ -18,15 +17,38 @@
                 </option>
             {% endfor %}
         </select>
-
         <label for="quantity">Quantity</label>
         <input type="number" name="quantity" value="1" min="1">
-
         <button type="submit">Add to cart</button>
     </fieldset>
 </form>
 </body>
+<!DOCTYPE html>
+<html lang="en">    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Welcome to the Flask App</h1>
+    <p>This is a simple Flask application.</p> 
+    {% if cart %}
+        <ul>
+            {% for item, details in cart.items() %}
+            <li>    
+                {{ item }}: {{ '%.2f' % details['quantity'] }} x ${{ '%.2f' % details['price'] }} = 
+                ${{  details['quantity'] * details['price'] | round(2) }} 
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
 
+</body>
+</html>
 
 
 
