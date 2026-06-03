@@ -8,7 +8,19 @@
 </head>
 <body>
   <form action="{{ url_for('add_to_cart') }}" method="post">
-    <button type="submit">add to cart</button>
+    <fieldset
+        <button type="submit">add to cart</button>
+    </fieldset>
+    </form>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
     <fieldset>
         <legend for="flower">Select Flowers</legend>
         <select name="flower" id="flower">
@@ -20,6 +32,6 @@
         <input type="number" name="quantity" value="1" min="1">
         <button type="submit">Add to cart</button>
     </fieldset>
-  </form>
+  
 </body>
 </html>
