@@ -3,11 +3,18 @@ import json
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
+@app.route('/calculate_total')
+# Utility function to calculate total price of items in the cart
+def calclate_total(cart):
+    total = sum(details['quantity'] * details['price'] for details in cart.values())
+    return total
 
 @app.route('/')
 def index(): 
+    cart = session.get('cart', {})
     flowers, addons = load_data()
-    return render_template('index.html', flowers=flowers, addons=addons)
+    total = calclate_total(cart)
+    return render_template ('index.html', flowers=flowers, addons=addons, cart=cart, total=total)
 
 @app.route('/about')
 def about():
@@ -16,19 +23,6 @@ def about():
 @app.route('/checkout')
 def checkout():
     return render_template('checkout.html')
-
-@app.route('/remove_from_cart/<item>')
-def remove_from_cart(item):
-    cart = session.get('cart', {})
-    if item in cart:
-        del cart[item]
-        session['cart'] = cart
-        session.modified = True
-        flash(f'{item} removed from cart.')
-    else:
-        flash(f'{item} not found in cart.')
-        
-    return render_template('test.html')
 
 @app.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
@@ -53,6 +47,22 @@ def add_to_cart():
     session.modified = True # force flask to save the session
     flash(f'Added {quantity} {flower}(s) added to cart.')
     return redirect(url_for('index'))
+
+@app.route('/remove_from_cart/<item>')
+def remove_from_cart(item):
+    cart = session.get('cart', {})
+     
+    if item in cart:
+        del cart[item]
+        session['cart'] = cart
+        session.modified = True
+        flash(f'{item} removed from cart.')
+    else:
+        flash(f'{item} not found in cart.')
+
+    return render_template('test.html')
+
+
 
 
 def load_data():
