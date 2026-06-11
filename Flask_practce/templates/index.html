@@ -32,11 +32,23 @@
 
                         <label for="quantity">Quantity</label>
                         <input type="number" name="quantity" id="quantity" value="1" min="1">
-
                         <button type="submit">Add to cart</button>
                     </form>
                 </article>
 
+                 <!-- Add-on  form -->
+                <form action="{{url_for('select_addon')}}" method="post">
+                        <fieldset> 
+                            <legend>Add-ons</legend>
+                            {% for addon, data in addons.items() %}
+                                <label>
+                                    <input type="checkbox" name="addons" value="{{ addon }}" 
+                                    {{ addon }} (${{ data.price }})
+                                </label><br>
+                            {% endfor % }
+                        </fieldset>
+                    </form>
+                    
                 <article class="panel panel-summary">
                     <h2>Cart Summary</h2>
                     {% if cart %}
