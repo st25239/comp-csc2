@@ -62,6 +62,14 @@ def remove_from_cart(item):
 
     return render_template('test.html')
 
+@app.route('/select_addon', methods=['POST'])
+def select_addon():
+    selected_addon = {}
+    _, addons = load_data() # we only need addons 
+
+    selected_keys = request.form.getlist('addon') # get list of selected addons from form
+
+
 
 
 
