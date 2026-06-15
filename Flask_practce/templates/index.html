@@ -42,10 +42,10 @@
                             <legend>Add-ons</legend>
                             {% for addon, data in addons.items() %}
                                 <label>
-                                    <input type="checkbox" name="addons" value="{{ addon }}" 
+                                    <input type="checkbox" name="addons" value="{{ addon }}">
                                     {{ addon }} (${{ data.price }})
                                 </label><br>
-                            {% endfor % }
+                            {% endfor %}
                         </fieldset>
                     </form>
                     
@@ -67,7 +67,19 @@
                     {% else %}
                         <p class="empty-state">Your cart is empty. Pick a flower to begin.</p>
                     {% endif %}
-
+                    <h2>Addons</h2> 
+                    {% if selected_addons %}
+                        <ul>
+                            {% for item, details in selected_addons.items() %}
+                                <li>
+                                   {{ item }}: ${{ '%.2f' % details }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                    <p> Addons are empty</p>
+                    {% endif %}
+                    
                     <div class="total-row">
                         <span>Total</span>
                         <strong>${{ '%.2f' % total }}</strong>

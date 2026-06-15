@@ -12,9 +12,10 @@ def calclate_total(cart):
 @app.route('/')
 def index(): 
     cart = session.get('cart', {})
+    selected_addons = session.get('selected_addons', {}) # get selected addons from session
     flowers, addons = load_data()
     total = calclate_total(cart)
-    return render_template ('index.html', flowers=flowers, addons=addons, cart=cart, total=total)
+    return render_template ('index.html', flowers=flowers, addons=addons, cart=cart, total=total, selected_addons=selected_addons)
 
 @app.route('/about')
 def about():
@@ -64,10 +65,18 @@ def remove_from_cart(item):
 
 @app.route('/select_addon', methods=['POST'])
 def select_addon():
-    selected_addon = {}
+    selected_addons = {}
     _, addons = load_data() # we only need addons 
 
     selected_keys = request.form.getlist('addon') # get list of selected addons from form
+
+    for addon in selected_keys:
+        if addon in addons:
+            selected_addons[addon] = float(addons[addon]['price']) # store selected addon and its price
+
+    session['selected_addon'] = selected_addons # store selected addons in session
+    session.modified = True # force flask to save the session
+    return redirect(url_for('home')) # redirect to home or any other page where you want to display the selected addons
 
 
 
