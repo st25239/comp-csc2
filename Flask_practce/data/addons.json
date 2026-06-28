@@ -2,5 +2,6 @@
 "Wrapping": {"price": 5, "stock":70},
 "Card": {"price": 4, "stock":60},
 "Writing on the card": {"price": 5, "stock":100000000000000000000000000000000000000000000000000000},
-"Chocolate": {"price": 10, "stock":50}
+"Chocolate": {"price": 10, "stock":50},
+"Lucas' jelly balls": {"price": 1.50, "stock":30}
 }

@@ -60,8 +60,7 @@ def remove_from_cart(item):
         flash(f'{item} removed from cart.')
     else:
         flash(f'{item} not found in cart.')
-
-    return render_template('test.html')
+    return redirect('/')
 
 @app.route('/select_addon', methods=['POST'])
 def select_addon():
@@ -76,7 +75,7 @@ def select_addon():
 
     session['selected_addon'] = selected_addons # store selected addons in session
     session.modified = True # force flask to save the session
-    return redirect(url_for('home')) # redirect to home or any other page where you want to display the selected addons
+    return redirect('/')# redirect to home or any other page where you want to display the selected addons
 
 
 
