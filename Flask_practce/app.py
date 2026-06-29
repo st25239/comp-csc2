@@ -5,16 +5,27 @@ app.secret_key = 'your_secret_key'
 
 @app.route('/calculate_total')
 # Utility function to calculate total price of items in the cart
-def calclate_total(cart):
+def calclate_total(cart, selected_addons):
     total = sum(details['quantity'] * details['price'] for details in cart.values())
+    total += sum(price for price in selected_addons.values())
     return total
+
+
+@app.route('/cancel_order', methods=['POST'])
+def cancel_order():
+    session.pop('cart', None)  # Clear the cart from the session
+    session.pop('selected_addons', None)  # Clear the selected addons from the session
+    flash('Order cancelled.')
+    session.modified = True  # Force Flask to save the session
+    return redirect(url_for('index'))  # Redirect to the index page after cancelling the order
+
 
 @app.route('/')
 def index(): 
     cart = session.get('cart', {})
     selected_addons = session.get('selected_addons', {}) # get selected addons from session
     flowers, addons = load_data()
-    total = calclate_total(cart)
+    total = calclate_total(cart, selected_addons) # calculate total price
     return render_template ('index.html', flowers=flowers, addons=addons, cart=cart, total=total, selected_addons=selected_addons)
 
 @app.route('/about')
@@ -67,13 +78,13 @@ def select_addon():
     selected_addons = {}
     _, addons = load_data() # we only need addons 
 
-    selected_keys = request.form.getlist('addon') # get list of selected addons from form
+    selected_keys = request.form.getlist('addons') # get list of selected addons from form
 
     for addon in selected_keys:
         if addon in addons:
             selected_addons[addon] = float(addons[addon]['price']) # store selected addon and its price
 
-    session['selected_addon'] = selected_addons # store selected addons in session
+    session['selected_addons'] = selected_addons # store selected addons in session
     session.modified = True # force flask to save the session
     return redirect('/')# redirect to home or any other page where you want to display the selected addons
 
