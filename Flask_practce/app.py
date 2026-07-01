@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import Flask, json, render_template, request, session, flash, redirect, url_for  
 import json
 app = Flask(__name__)
@@ -32,9 +34,27 @@ def index():
 def about():
     return render_template('about.html')
 
-@app.route('/checkout')
+@app.route('/checkout', methods=['POST'])
 def checkout():
-    return render_template('checkout.html')
+    customer_name = request.form['customer_name'].strip().title()
+    cart = session.get('cart', {})
+    selected_addons = session.get('selected_addons', {}) # get selected addons from session
+   
+
+    if not customer_name:
+        flash('Please enter your name before proceeding to checkout.')
+        return redirect(url_for('index'))
+
+    if not cart:
+        flash('Your cart is empty. Please add items to your cart before checking out.')
+        return redirect(url_for('index'))
+    
+
+    total = calculate_total(cart, selected_addons) # calculate total price
+    invoice_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    invoice_number = f"INV-{customer_name.replace(' ', '_')}_{invoice_date}"
+
+    return render_template('checkout.html', customer_name=customer_name, cart=cart, total=total, invoice_number=invoice_number, invoice_date=invoice_date, selected_addons=selected_addons)
 
 @app.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
