@@ -7,7 +7,7 @@ app.secret_key = 'your_secret_key'
 
 @app.route('/calculate_total')
 # Utility function to calculate total price of items in the cart
-def calclate_total(cart, selected_addons):
+def calculate_total(cart, selected_addons):
     total = sum(details['quantity'] * details['price'] for details in cart.values())
     total += sum(price for price in selected_addons.values())
     return total
@@ -27,7 +27,7 @@ def index():
     cart = session.get('cart', {})
     selected_addons = session.get('selected_addons', {}) # get selected addons from session
     flowers, addons = load_data()
-    total = calclate_total(cart, selected_addons) # calculate total price
+    total = calculate_total(cart, selected_addons) # calculate total price
     return render_template ('index.html', flowers=flowers, addons=addons, cart=cart, total=total, selected_addons=selected_addons)
 
 @app.route('/about')
