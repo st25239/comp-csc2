@@ -1,4 +1,44 @@
 {% extends "base.html" %}
-<header> <h2>Invoice</h2> </header>
-<p>This page will show the customer invoice after checkout</p>
+
+{% block title %}Invoice{% endblock %}
+
 {% block content %}
+
+<h1>Invoice</h1>
+
+<p><strong>Thank you for your order, {{ customer_name }}!</strong></p>
+
+<p><strong>Invoice Number:</strong> {{ invoice_number }}</p>
+<p><strong>Date:</strong> {{ invoice_date }}</p>
+
+<h2>Items</h2>
+
+<ul>
+{% for flower, details in cart.items() %}
+    <li>
+        {{ flower }}:
+        {{ details.quantity }} × ${{ "%.2f"|format(details.price) }}
+        = ${{ "%.2f"|format(details.quantity * details.price) }}
+    </li>
+{% endfor %}
+</ul>
+
+{% if selected_addons %}
+<h2>Add-Ons</h2>
+
+<ul>
+{% for addon, details in selected_addons.items() %}
+    <li>
+        {{ addon }}:
+        {{ details.quantity }} × ${{ "%.2f"|format(details.price) }}
+        = ${{ "%.2f"|format(details.quantity * details.price) }}
+    </li>
+{% endfor %}
+</ul>
+{% endif %}
+
+<h2>Total: ${{ "%.2f"|format(total) }}</h2>
+
+<a href="{{ url_for('index') }}">Back to Shop</a>
+
+{% endblock %}

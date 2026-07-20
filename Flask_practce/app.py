@@ -1,9 +1,27 @@
-from datetime import datetime
+import datetime
+import sqlite3
 
 from flask import Flask, json, render_template, request, session, flash, redirect, url_for  
 import json
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
+
+def initalise_database():
+    with sqlite3.connect ('flower_shop.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS orders (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                customer_name TEXT NOT NULL,
+                cart TEXT NOT NULL,
+                total REAL NOT NULL,
+                invoice_number TEXT NOT NULL,
+                invoice_date TEXT NOT NULL
+            )
+        ''')
+        conn.commit()
+
+
 
 @app.route('/calculate_total')
 # Utility function to calculate total price of items in the cart
@@ -39,6 +57,12 @@ def checkout():
     customer_name = request.form['customer_name'].strip().title()
     cart = session.get('cart', {})
     selected_addons = session.get('selected_addons', {}) # get selected addons from session
+    with sqlite3.connect('flower_shop.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+        INSERT INTO orders (invoice_number, customer_name, cart, total, addons, total) VALUES (?, ?, ?, ?, ?, ?)
+        ''', (invoice_number, customer_name, json.dumps(cart), total, json.dumps(selected_addons), total))
+        conn.commit()
    
 
     if not customer_name:
@@ -54,7 +78,7 @@ def checkout():
     invoice_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     invoice_number = f"INV-{customer_name.replace(' ', '_')}_{invoice_date}"
 
-    return render_template('checkout.html', customer_name=customer_name, cart=cart, total=total, invoice_number=invoice_number, invoice_date=invoice_date, selected_addons=selected_addons)
+    return render_template('invoice.html', customer_name=customer_name, cart=cart, total=total, invoice_number=invoice_number, invoice_date=invoice_date, selected_addons=selected_addons)
 
 @app.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
@@ -126,4 +150,5 @@ def load_data():
 
 
 if __name__ == '__main__':
+    initalise_database()
     app.run(debug=True)
