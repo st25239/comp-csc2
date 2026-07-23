@@ -28,15 +28,17 @@ def initalise_database():
 def calculate_total(cart, selected_addons):
     total = sum(details['quantity'] * details['price'] for details in cart.values())
     total += sum(price for price in selected_addons.values())
+    discount_applied = False
+    total = sum(details['quantity'] * details['price'] for details in cart.values())
+
+    if total > 100 and not discount_applied:
+        discount = total * 0.10  # 10% discount
+        total -= discount
+        discount_applied = True
+        display_discount_message = f"A 10% discount has been applied. You saved ${discount:.2f}!"
+        flash(display_discount_message)
+
     return total
-discount_applied = False
-total = sum(details['quantity'] * details['price'] for details in cart.values())
-
-if total > 100 and not discount_applied:
-    discount = total * 0.10  # 10% discount
-    total -= discount
-    discount_applied = True
-
 
 @app.route('/cancel_order', methods=['POST'])
 def cancel_order():
