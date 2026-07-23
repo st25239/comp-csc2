@@ -29,6 +29,13 @@ def calculate_total(cart, selected_addons):
     total = sum(details['quantity'] * details['price'] for details in cart.values())
     total += sum(price for price in selected_addons.values())
     return total
+discount_applied = False
+total = sum(details['quantity'] * details['price'] for details in cart.values())
+
+if total > 100 and not discount_applied:
+    discount = total * 0.10  # 10% discount
+    total -= discount
+    discount_applied = True
 
 
 @app.route('/cancel_order', methods=['POST'])
@@ -63,6 +70,23 @@ def checkout():
         INSERT INTO orders (invoice_number, customer_name, cart, total, addons, total) VALUES (?, ?, ?, ?, ?, ?)
         ''', (invoice_number, customer_name, json.dumps(cart), total, json.dumps(selected_addons), total))
         conn.commit()
+
+        # make invoice file
+        invoice_filename = f"{invoice_number}.txt"
+
+        with open(invoice_filename, 'w') as f:
+            f.write(f"Invoice Number: {invoice_number}\n")
+            f.write(f"Customer Name: {customer_name}\n")
+            f.write(f"Date: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+            f.write("Items:\n")
+            for item, details in cart.items():
+                f.write(f"{item}: {details['quantity']} X {details['price']} = ${details['quantity'] * details['price']:.2f}\n")
+            if selected_addons:
+                f.write("Add-ons:\n")
+                for addon, price in selected_addons.items():
+                    f.write(f"{addon} - Price: ${price:.2f}\n")
+
+            f.write(f"Total: ${total:.2f}\n")
    
 
     if not customer_name:
@@ -77,6 +101,9 @@ def checkout():
     total = calculate_total(cart, selected_addons) # calculate total price
     invoice_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     invoice_number = f"INV-{customer_name.replace(' ', '_')}_{invoice_date}"
+
+    with open('data/flowers.json', 'w') as f:
+        f.write(invoice_number)
 
     return render_template('invoice.html', customer_name=customer_name, cart=cart, total=total, invoice_number=invoice_number, invoice_date=invoice_date, selected_addons=selected_addons)
 
