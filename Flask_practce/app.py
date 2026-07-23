@@ -22,7 +22,31 @@ def initalise_database():
         conn.commit()
 
 
+@app.route('/orders')
+def order_history():
+    with sqlite3.connect('flower_shop.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM orders ORDER BY id DESC')
+        rows = cursor.fetchall()
+        orders = []
+        for row in rows:   
+            orders.append({
+                'order_id': row[0],
+                'invoice_number': row[1],
+                'customer_name': row[2],
+                'items': json.loads(row[3]),  
+                'total': row[4],
+                'addons': json.loads(row[5]),
+                'date': row[6]
+            })
+    return render_template('order_history.html', orders=orders)
+    
 
+
+
+
+
+   
 @app.route('/calculate_total')
 # Utility function to calculate total price of items in the cart
 def calculate_total(cart, selected_addons):
