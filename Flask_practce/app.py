@@ -103,8 +103,21 @@ def checkout():
     invoice_number = f"INV-{customer_name.replace(' ', '_')}_{invoice_date}"
 
     with open('data/flowers.json', 'w') as f:
-        f.write(invoice_number)
+        json.dump(flowers_data, f)
 
+    with open('data/flowers.json', 'r') as file:
+        flowers_data = json.load(file)  
+
+    for flower_name, details in cart.items():
+        if flower_name in flowers_data:
+            flowers_data[flower_name]['stock'] -= details['quantity']
+            if flowers_data[flower_name]['stock'] < 0:
+                flowers_data[flower_name]['stock'] = 0 # no negative stock
+
+    with open('data/flowers.json', 'w') as file:
+        json.dump(flowers_data, file, indent=4)
+
+         
     return render_template('invoice.html', customer_name=customer_name, cart=cart, total=total, invoice_number=invoice_number, invoice_date=invoice_date, selected_addons=selected_addons)
 
 @app.route('/add_to_cart', methods=['POST'])
