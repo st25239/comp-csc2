@@ -41,7 +41,14 @@ def order_history():
             })
     return render_template('order_history.html', orders=orders)
     
-
+@app.route('/cancel_saved_order/<int:order_id>', methods=['POST'])
+def cancel_saved_order(order_id):
+    with sqlite3.connect('flower_shop.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute('DELETE FROM orders WHERE id = ?', (order_id,))
+        conn.commit()
+    flash(f'Order {order_id} has been cancelled.')
+    return redirect(url_for('order_history'))
 
 
 
@@ -99,49 +106,55 @@ def checkout():
 
         # make invoice file
         invoice_filename = f"{invoice_number}.txt"
-
-        with open(invoice_filename, 'w') as f:
-            f.write(f"Invoice Number: {invoice_number}\n")
-            f.write(f"Customer Name: {customer_name}\n")
-            f.write(f"Date: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-            f.write("Items:\n")
-            for item, details in cart.items():
-                f.write(f"{item}: {details['quantity']} X {details['price']} = ${details['quantity'] * details['price']:.2f}\n")
-            if selected_addons:
-                f.write("Add-ons:\n")
+        try:
+            with open(invoice_filename, 'w') as f:
+                f.write(f"Invoice Number: {invoice_number}\n")
+                f.write(f"Customer Name: {customer_name}\n")
+                f.write(f"Date: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+                f.write("Items:\n")
+                for item, details in cart.items():
+                        f.write(f"{item}: {details['quantity']} X {details['price']} = ${details['quantity'] * details['price']:.2f}\n")
+                if selected_addons:
+                      f.write("Add-ons:\n")
                 for addon, price in selected_addons.items():
                     f.write(f"{addon} - Price: ${price:.2f}\n")
 
             f.write(f"Total: ${total:.2f}\n")
-   
+        except Exception as e:
+            flash(f"Error loading invoice: {e}")
+            return {},{}
+    try:
+        if not customer_name:
+                flash('Please enter your name before proceeding to checkout.')
+                return redirect(url_for('index'))
 
-    if not customer_name:
-        flash('Please enter your name before proceeding to checkout.')
-        return redirect(url_for('index'))
+        if not cart:
+                flash('Your cart is empty. Please add items to your cart before checking out.')
+                return redirect(url_for('index'))
 
-    if not cart:
-        flash('Your cart is empty. Please add items to your cart before checking out.')
+        total = calculate_total(cart, selected_addons) # calculate total price
+        invoice_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        invoice_number = f"INV-{customer_name.replace(' ', '_')}_{invoice_date}"
+
+        with open('data/flowers.json', 'w') as f:
+                 json.dump(flowers_data, f)
+
+        with open('data/flowers.json', 'r') as file:
+                 flowers_data = json.load(file)  
+
+        for flower_name, details in cart.items():
+            if flower_name in flowers_data:
+                flowers_data[flower_name]['stock'] -= details['quantity']
+                if flowers_data[flower_name]['stock'] < 0:
+                    flowers_data[flower_name]['stock'] = 0 # no negative stock
+
+        with open('data/flowers.json', 'w') as file:
+            json.dump(flowers_data, file, indent=4)
+
+    except Exception as e:
+        flash(f"Error could not update stock file : {e}")
         return redirect(url_for('index'))
     
-
-    total = calculate_total(cart, selected_addons) # calculate total price
-    invoice_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    invoice_number = f"INV-{customer_name.replace(' ', '_')}_{invoice_date}"
-
-    with open('data/flowers.json', 'w') as f:
-        json.dump(flowers_data, f)
-
-    with open('data/flowers.json', 'r') as file:
-        flowers_data = json.load(file)  
-
-    for flower_name, details in cart.items():
-        if flower_name in flowers_data:
-            flowers_data[flower_name]['stock'] -= details['quantity']
-            if flowers_data[flower_name]['stock'] < 0:
-                flowers_data[flower_name]['stock'] = 0 # no negative stock
-
-    with open('data/flowers.json', 'w') as file:
-        json.dump(flowers_data, file, indent=4)
 
          
     return render_template('invoice.html', customer_name=customer_name, cart=cart, total=total, invoice_number=invoice_number, invoice_date=invoice_date, selected_addons=selected_addons)
@@ -203,12 +216,15 @@ def select_addon():
 
 
 def load_data():
-    with open('data/flowers.json') as file:
-        flowers = json.load(file)
-    with open('data/addons.json') as file:
-        addons = json.load(file)  
- 
-    return flowers, addons
+    try:
+        with open('data/flowers.json') as file:
+            flowers = json.load(file)
+        with open('data/addons.json') as file:
+            addons = json.load(file)
+        return flowers, addons
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        print(f"Error loading data: {e}")
+        return {}, {}
 
 
 
