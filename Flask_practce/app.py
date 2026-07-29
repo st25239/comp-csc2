@@ -97,6 +97,10 @@ def checkout():
     customer_name = request.form['customer_name'].strip().title()
     cart = session.get('cart', {})
     selected_addons = session.get('selected_addons', {}) # get selected addons from session
+    total = calculate_total(cart, selected_addons) # calculate total price
+    invoice_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    invoice_number = f"INV-{customer_name.replace(' ', '_')}_{invoice_date}"
+
     with sqlite3.connect('flower_shop.db') as conn:
         cursor = conn.cursor()
         cursor.execute('''
@@ -132,9 +136,7 @@ def checkout():
                 flash('Your cart is empty. Please add items to your cart before checking out.')
                 return redirect(url_for('index'))
 
-        total = calculate_total(cart, selected_addons) # calculate total price
-        invoice_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        invoice_number = f"INV-{customer_name.replace(' ', '_')}_{invoice_date}"
+       
 
         with open('data/flowers.json', 'w') as f:
                  json.dump(flowers_data, f)
