@@ -7,16 +7,18 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
 def initalise_database():
-    with sqlite3.connect ('flower_shop.db') as conn:
+    with sqlite3.connect ('flower_shop2.db') as conn:
         cursor = conn.cursor()
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS orders (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 customer_name TEXT NOT NULL,
-                cart TEXT NOT NULL,
+                cart text NOT NULL,
                 total REAL NOT NULL,
                 invoice_number TEXT NOT NULL,
-                invoice_date TEXT NOT NULL
+                invoice_date TEXT NOT NULL,
+                addons TEXT 
+
             )
         ''')
         conn.commit()
@@ -103,7 +105,7 @@ def checkout():
 
     with sqlite3.connect('flower_shop.db') as conn:
         cursor = conn.cursor()
-        cursor.execute('''
+        cursor.execute(''' 
         INSERT INTO orders (invoice_number, customer_name, cart, total, addons, total) VALUES (?, ?, ?, ?, ?, ?)
         ''', (invoice_number, customer_name, json.dumps(cart), total, json.dumps(selected_addons), total))
         conn.commit()
