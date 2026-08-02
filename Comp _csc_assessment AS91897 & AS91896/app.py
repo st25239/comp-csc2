@@ -6,8 +6,14 @@ from flask import Flask, app, json, redirect, redirect, render_template, request
 import json
 app = Flask(__name__)
 app.secret_key = 'I_love_my_mom'
+app.secret_key = 'i_love_Liam_Nguyen'
+app.secret_key = 'i_love_Lucas_Smith'
 
-
+def initialise_database():
+    with sqlite3.connect('database.db') as conn:
+        c = conn.cursor()
+      
+        conn.commit()
 
 
 
