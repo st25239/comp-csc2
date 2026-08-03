@@ -1,4 +1,10 @@
-<html>
+{% extends "base.html" %}
+
+{% block title %}Pizza Place{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -6,6 +12,64 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <from action=""
-</body>
+    <main class="page-shell">
+        <section class="coder-card">
+            <section class="grid-panel">
+                <article class="panel panel-form">
+                    <from action="{{url_for(add_to_cart)}}" method="post">
+                    <button type="submit">Add to Cart</button>
+                    <fieldset>
+                        <legend> for="pizza">Choose a Pizza</legend>
+                        <select name="pizza" id="pizza">
+                            {% for pizza,details in pizzas.items() %}
+                                <option value="{{ pizza }}">
+                                    {{ pizza }} - ${{ details['price'] }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" name="quantity" id="quantity" min="1" value="1">
+                        <button type="submit">Add to Cart</button>
+                    </fieldset>
+                    </from>
+                </article>
+
+
+
+
+            </section>
+        </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </body>
 </html>
