@@ -15,15 +15,16 @@
     <main class="page-shell">
         <section class="coder-card">
             <section class="grid-panel">
+                <!-- add to cart form -->
                 <article class="panel panel-form">
                     <from action="{{url_for(add_to_cart)}}" method="post">
                     <button type="submit">Add to Cart</button>
                     <fieldset>
                         <legend> for="pizza">Choose a Pizza</legend>
                         <select name="pizza" id="pizza">
-                            {% for pizza,details in pizzas.items() %}
+                            {% for pizza,data in pizzas.items() %}
                                 <option value="{{ pizza }}">
-                                    {{ pizza }} - ${{ details['price'] }}
+                                    {{ pizza }} - ${{ data['price'] }}
                                 </option>
                             {% endfor %}
                         </select>
@@ -33,10 +34,41 @@
                     </fieldset>
                     </from>
                 </article>
+                
+                <!-- add-ons form-->
+                <form action="{{url_for('select_addons')}}" method="post">
+                    <fieldset>
+                        <legend>Choose Add-ons</legend>
+                        <!-- Add-on options will be populated here -->
+                         {% for addon, data in addons.items() %}
+                            <label>
+                                <input type="checkbox" name="addons" value="{{ addon }}" id="{{ addon }}">
+                                {{ addon }} - ${{ data['price'] }}
+                            </label><br>
+                        {% endfor %}
+                        <button type="submit">Add to Cart</button>
+                    </fieldset>
+                </form>
 
-
-
-
+            <article class="panel panel-summary">
+                <h2>Cart Summary </h2>
+                {% if cart %}
+                    <ul class="cart-list">
+                        {% for item, details in cart.items() %}
+                            <li>
+                                <div>
+                                    <strong>{{ item }}</strong> - Quantity: {{ details['quantity'] }} - Price: ${{ details['price'] }}
+                                    <span>{{ '%.2f' % details['total'] }} x ${{ '%.2f' % details['price'] }}</span>
+                                </div>
+                                <a href="{{ url_for('remove_from_cart', item=item) }}" class="remove-button">Remove</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="empty-cart">Your cart is empty.</p>
+                {% endif %}
+                
+            </article>
             </section>
         </section>
 
