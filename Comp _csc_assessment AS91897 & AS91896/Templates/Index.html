@@ -67,7 +67,19 @@
                 {% else %}
                     <p class="empty-cart">Your cart is empty.</p>
                 {% endif %}
-                
+                <h2>Addons</h2>
+                {% if selected_addons %}
+                    <ul>
+                        {% for item, details in selected_addons.items() %}
+                        <li>{{ item }}: ${{ '%.2f' % details }} </li>
+                     {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="empty-cart">No add-ons selected.</p>
+                {% endif %}
+
+                <div class="total-row">
+                    <strong>Total: ${{ '%.2f' % total }}</strong>
             </article>
             </section>
         </section>
