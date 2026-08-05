@@ -50,38 +50,43 @@
                     </fieldset>
                 </form>
 
-            <article class="panel panel-summary">
-                <h2>Cart Summary </h2>
-                {% if cart %}
-                    <ul class="cart-list">
-                        {% for item, details in cart.items() %}
-                            <li>
-                                <div>
-                                    <strong>{{ item }}</strong> - Quantity: {{ details['quantity'] }} - Price: ${{ details['price'] }}
-                                    <span>{{ '%.2f' % details['total'] }} x ${{ '%.2f' % details['price'] }}</span>
-                                </div>
-                                <a href="{{ url_for('remove_from_cart', item=item) }}" class="remove-button">Remove</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p class="empty-cart">Your cart is empty.</p>
-                {% endif %}
-                <h2>Addons</h2>
-                {% if selected_addons %}
-                    <ul>
-                        {% for item, details in selected_addons.items() %}
-                        <li>{{ item }}: ${{ '%.2f' % details }} </li>
-                     {% endfor %}
-                    </ul>
-                {% else %}
-                    <p class="empty-cart">No add-ons selected.</p>
-                {% endif %}
+                <article class="panel panel-summary">
+                    <h2>Cart Summary </h2>
+                    {% if cart %}
+                        <ul class="cart-list">
+                            {% for item, details in cart.items() %}
+                                <li>
+                                    <div>
+                                        <strong>{{ item }}</strong> - Quantity: {{ details['quantity'] }} - Price: ${{ details['price'] }}
+                                        <span>{{ '%.2f' % details['total'] }} x ${{ '%.2f' % details['price'] }}</span>
+                                     </div>
+                                     <a href="{{ url_for('remove_from_cart', item=item) }}" class="remove-button">Remove</a>
+                                </li>
+                                {% endfor %}
+                        </ul>
+                                {% else %}
+                        <p class="empty-cart">Your cart is empty.</p>
+                    {% endif %}
+                    <h2>Addons</h2>
+                    {% if selected_addons %}
+                        <ul>
+                            {% for item, details in selected_addons.items() %}
+                            <li>{{ item }}: ${{ '%.2f' % details }} </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="empty-cart">No add-ons selected.</p>
+                    {% endif %}
 
-                <div class="total-row">
+                    <div class="total-row">
+                    <span>Total</span>
                     <strong>Total: ${{ '%.2f' % total }}</strong>
-            </article>
+                    </div>
+                </article>
             </section>
+
+
+
         </section>
 
 
